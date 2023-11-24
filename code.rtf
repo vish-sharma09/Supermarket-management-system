@@ -1,0 +1,229 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2758
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf0 #include <iostream>\
+#include <iomanip>\
+#include <vector>\
+#include <map>\
+#include <fstream>\
+\
+using namespace std;\
+\
+// Define a structure to represent an item\
+struct Item \{\
+    string name;\
+    double price;\
+    int quantity;\
+\};\
+\
+// Define a structure to represent a user\
+struct User \{\
+    string username;\
+    string password;\
+\};\
+\
+// Define a class for the supermarket billing system\
+class SupermarketBillingSystem \{\
+private:\
+    vector<Item> items;\
+\
+public:\
+    // Function to add an item to the system\
+    void addItem(const string& name, double price, int quantity) \{\
+        Item newItem;\
+        newItem.name = name;\
+        newItem.price = price;\
+        newItem.quantity = quantity;\
+        items.push_back(newItem);\
+    \}\
+\
+    // Function to remove an item from the system\
+    void removeItem(int index) \{\
+        if (index >= 0 && index < items.size()) \{\
+            items.erase(items.begin() + index);\
+        \}\
+    \}\
+\
+    // Function to calculate the total bill\
+    double calculateTotalBill() \{\
+        double totalBill = 0.0;\
+        for (const auto& item : items) \{\
+            totalBill += item.price * item.quantity;\
+        \}\
+        return totalBill;\
+    \}\
+\
+    // Function to display the bill\
+       void displayBill() \{\
+        cout << "------------------------------------------" << endl;\
+        cout << "------------------------------------------" << endl;\
+        cout << "------------------------------------------" << endl;\
+        cout << "||    --Supermarket Billing System--    ||" << endl;\
+        cout << "------------------------------------------" << endl;\
+        cout << "------------------------------------------" << endl;\
+        cout << "------------------------------------------" << endl;\
+        cout << setw(20) << "Item" << setw(10) << "Price" << setw(10) << "Quantity" << setw(15) << "Total" << endl;\
+        cout << "-----------------------------------" << endl;\
+        for (const auto& item : items) \{\
+            cout << setw(20) << item.name << setw(10) << item.price << setw(10) << item.quantity\
+                 << setw(15) << (item.price * item.quantity) << endl;\
+        \}\
+        cout << "-----------------------------------" << endl;\
+        cout << "Total Bill: " << calculateTotalBill() << endl;\
+        cout << "-----------------------------------" << endl;\
+    \}\
+\};\
+\
+\
+// Function to check if a user is registered\
+bool isUserRegistered(const string& username, const string& password) \{\
+    ifstream file("users.rtf");\
+    string line;\
+    while (getline(file, line)) \{\
+        size_t pos = line.find(':');\
+        if (pos != string::npos) \{\
+            string storedUsername = line.substr(0, pos);\
+            string storedPassword = line.substr(pos + 1);\
+            if (storedUsername == username && storedPassword == password) \{\
+                return true; // User found\
+            \}\
+        \}\
+    \}\
+    return false; // User not found\
+\}\
+\
+\
+// Function to register a new user\
+void registerUser(const string& username, const string& password) \{\
+    ofstream file("users.rtf", ios::app);\
+    file << username << ":" << password << endl;\
+\};\
+\
+int main() \{\
+    string username, password;\
+\
+    // Ask if the user is already registered\
+    cout << "Are you already registered? (yes/no): ";\
+    string registered;\
+    cin >> registered;\
+\
+    if (registered == "no") \{\
+        // Register a new user\
+        cout << "Enter a username: ";\
+        cin >> username;\
+        cout << "Enter a password: ";\
+        cin >> password;\
+        registerUser(username, password);\
+    \} else \{\
+        // Login for an existing user\
+        cout << "Enter your username: ";\
+        cin >> username;\
+        cout << "Enter your password: ";\
+        cin >> password;\
+\
+        if (!isUserRegistered(username, password)) \{\
+            cout << "Invalid username or password. Exiting." << endl;\
+            return 1;\
+        \}\
+    \};\
+\
+\
+    SupermarketBillingSystem supermarket;\
+\
+    // Available products\
+    map<int, pair<string, double>> productOptions;\
+    productOptions[1] = make_pair("Bread", 35.00);\
+    productOptions[2] = make_pair("Milk 1ltr", 108.00);\
+    productOptions[3] = make_pair("Eggs", 100.00);\
+    productOptions[4] = make_pair("Cheese", 140.50);\
+    productOptions[5] = make_pair("Wheat flour", 200.00);\
+    productOptions[6] = make_pair("Rice 1kg", 170.50);\
+    productOptions[7] = make_pair("Juice Guava", 105.00);\
+    productOptions[8] = make_pair("Juice Apple", 125.50);\
+    productOptions[9] = make_pair("Juice Pineapple", 105.00);\
+    productOptions[10] = make_pair("Juice Cranberry", 125.50);\
+    productOptions[11] = make_pair("Juice Orange", 105.00);\
+    productOptions[12] = make_pair("Juice Mango", 125.50);\
+    productOptions[13] = make_pair("Juice Mixed Fruit", 135.00);\
+    productOptions[14] = make_pair("Shampoo", 300.00);\
+    productOptions[15] = make_pair("Soap", 100.00);\
+    productOptions[16] = make_pair("Butter", 104.50);\
+    productOptions[17] = make_pair("Brush", 85.00);\
+    productOptions[18] = make_pair("Hair Serum", 299.50);\
+    productOptions[19] = make_pair("Face wash", 105.00);\
+    productOptions[20] = make_pair("Bucket", 500.00);\
+    productOptions[21] = make_pair("Chocolate", 105.00);\
+    productOptions[22] = make_pair("Toothpaste", 155.50);\
+    productOptions[23] = make_pair("Comb", 105.00);\
+    productOptions[24] = make_pair("Napkins", 100.50);\
+    productOptions[25] = make_pair("Pencil", 80.00);\
+    productOptions[26] = make_pair("Notebook", 75.00);\
+    productOptions[27] = make_pair("Pen", 50.00);\
+    productOptions[28] = make_pair("Calculator", 800.00);\
+    productOptions[29] = make_pair("Chips", 30.00);\
+    productOptions[30] = make_pair("Cold drink", 40.00);\
+\
+    // Displaying product options\
+    cout << "Available Products:" << endl;\
+    for (const auto& option : productOptions) \{\
+        cout << option.first << ". " << option.second.first << " - Rs" << option.second.second << endl;\
+    \}\
+\
+    // User chooses products\
+    int choice;\
+    do \{\
+        cout << "Enter the product number to add to your cart (0 to finish, 'exit' to display bill): ";\
+        cin >> choice;\
+\
+        if (cin.fail()) \{\
+            // Handle non-integer input\
+            string input;\
+            cin.clear();\
+            cin >> input;\
+            if (input == "exit") \{\
+                break;\
+            \} else \{\
+                cout << "Invalid input. Please enter a valid product number or 'exit'." << endl;\
+                continue;\
+            \}\
+        \}\
+\
+        if (choice > 0 && choice <= productOptions.size()) \{\
+            int quantity;\
+            cout << "Enter the quantity: ";\
+            cin >> quantity;\
+\
+            supermarket.addItem(productOptions[choice].first, productOptions[choice].second, quantity);\
+        \} else if (choice != 0 && choice != 0) \{\
+            cout << "Invalid choice. Please enter a valid product number or 'exit'." << endl;\
+        \}\
+    \} while (choice != 0);\
+\
+    // Displaying the bill\
+    supermarket.displayBill();\
+    \
+    // Allow the user to remove items from the cart\
+    int removeIndex;\
+    do \{\
+        cout << "Enter the index of the item to remove (0 to finish): ";\
+        cin >> removeIndex;\
+\
+        if (removeIndex > 0 && removeIndex <= static_cast<int>(supermarket.calculateTotalBill())) \{\
+            supermarket.removeItem(removeIndex - 1);\
+            cout << "Item removed from your cart." << endl;\
+        \} else if (removeIndex != 0) \{\
+            cout << "Invalid index. Please enter a valid index or '0' to finish." << endl;\
+        \}\
+    \} while (removeIndex != 0);\
+\
+    // Displaying the final bill\
+    supermarket.displayBill();\
+\
+    return 0;\
+\}\
+}
